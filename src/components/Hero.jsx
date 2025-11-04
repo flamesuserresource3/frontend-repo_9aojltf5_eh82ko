@@ -6,85 +6,77 @@ import { Rocket } from "lucide-react";
 export default function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const subtitleY = useTransform(scrollYProgress, [0, 1], [0, -20]);
 
   return (
-    <section id="home" ref={ref} className="relative min-h-[92vh] w-full overflow-hidden">
-      {/* Colorful gradient blobs as ambient lights */}
-      <div className="pointer-events-none absolute inset-0">
-        <motion.div
-          className="absolute -top-24 -left-16 h-72 w-72 rounded-full bg-fuchsia-500/30 blur-3xl"
-          animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+    <section id="home" ref={ref} className="relative min-h-[96vh] w-full overflow-hidden">
+      {/* Full-width colorful 3D cover */}
+      <motion.div style={{ y }} className="absolute inset-0">
+        <Spline
+          scene="https://prod.spline.design/LU2mWMPbF3Qi1Qxh/scene.splinecode"
+          style={{ width: "100%", height: "100%" }}
         />
-        <motion.div
-          className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-cyan-400/30 blur-3xl"
-          animate={{ y: [0, -20, 0], x: [0, -10, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+        {/* Top/bottom gradients for readability; do not block interactions */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_10%,rgba(168,85,247,0.25),transparent),radial-gradient(40%_40%_at_80%_70%,rgba(34,211,238,0.25),transparent)]" />
+      </motion.div>
 
-      <div className="relative mx-auto flex max-w-7xl flex-col-reverse gap-10 px-6 pb-24 pt-40 md:flex-row md:items-center md:pb-28 md:pt-32">
-        <div className="relative z-10 max-w-xl">
+      {/* Content */}
+      <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-6 pb-28 pt-40 md:pb-32 md:pt-44">
+        <motion.div style={{ y: titleY }} className="max-w-3xl">
           <motion.h1
-            className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight"
+            className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            Full‑Stack Developer
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300">
+            Crafting playful, modern, vibrant products
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-violet-300 to-cyan-300">
               React • Node • Java • Spring Boot
             </span>
           </motion.h1>
+        </motion.div>
 
-          <motion.p
-            className="mt-5 text-white/80 leading-relaxed"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15, duration: 0.6 }}
+        <motion.p
+          style={{ y: subtitleY }}
+          className="max-w-2xl text-white/85 text-base md:text-lg leading-relaxed"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+        >
+          I build delightful interfaces and resilient backends—bringing together React, Express,
+          Java, Spring, ANTLR, PostgreSQL, and MongoDB to ship real, impactful software.
+        </motion.p>
+
+        <div className="mt-2 flex flex-wrap items-center gap-3">
+          <motion.a
+            href="#projects"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-fuchsia-500 via-violet-500 to-cyan-400 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-fuchsia-500/20 hover:brightness-110 transition"
+            whileTap={{ scale: 0.98 }}
           >
-            Building robust web platforms with React.js, Express.js, Java, Spring & Spring Boot.
-            Experienced with ANTLR parsers, PostgreSQL, and MongoDB. 2+ years crafting high‑impact
-            solutions at Endava Solutions.
-          </motion.p>
-
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <motion.a
-              href="#projects"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-fuchsia-500 via-violet-500 to-cyan-400 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-fuchsia-500/20 hover:brightness-110 transition"
-              whileTap={{ scale: 0.98 }}
-            >
-              <Rocket size={18} /> View Projects
-            </motion.a>
-            <motion.a
-              href="mailto:contact@developer.dev"
-              className="inline-flex items-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 transition"
-              whileTap={{ scale: 0.98 }}
-            >
-              Contact Me
-            </motion.a>
-          </div>
-
-          <motion.div
-            className="mt-8 flex flex-wrap gap-2"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            <Rocket size={18} /> Explore Projects
+          </motion.a>
+          <motion.a
+            href="#labs"
+            className="inline-flex items-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 transition"
+            whileTap={{ scale: 0.98 }}
           >
-            {[
-              "React.js",
-              "Node.js",
-              "Express.js",
-              "Java",
-              "Spring",
-              "Spring Boot",
-              "ANTLR",
-              "PostgreSQL",
-              "MongoDB",
-            ].map((tag, i) => (
+            Open Labs
+          </motion.a>
+        </div>
+
+        <motion.div
+          className="mt-6 flex flex-wrap gap-2"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          {["React.js", "Node.js", "Express.js", "Java", "Spring", "Spring Boot", "ANTLR", "PostgreSQL", "MongoDB"].map(
+            (tag, i) => (
               <motion.span
                 key={tag}
                 initial={{ opacity: 0, y: 8 }}
@@ -95,18 +87,8 @@ export default function Hero() {
               >
                 {tag}
               </motion.span>
-            ))}
-          </motion.div>
-        </div>
-
-        <motion.div style={{ y }} className="relative h-[380px] w-full md:h-[520px] md:flex-1">
-          <div className="absolute inset-0 rounded-3xl overflow-hidden border border-white/10 bg-black/20">
-            <Spline
-              scene="https://prod.spline.design/N8g2VNcx8Rycz93J/scene.splinecode"
-              style={{ width: "100%", height: "100%" }}
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-          </div>
+            )
+          )}
         </motion.div>
       </div>
     </section>
