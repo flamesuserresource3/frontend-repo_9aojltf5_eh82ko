@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export default function Navbar() {
   const navItems = [
     { href: "#home", label: "Home" },
-    { href: "#skills", label: "Skills" },
+    { href: "#experience", label: "Experience" },
     { href: "#projects", label: "Projects" },
   ];
 

@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Spline from "@splinetool/react-spline";
 
 const PROJECTS = [
   {
@@ -26,31 +27,39 @@ export default function Projects() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const headerY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
     <section id="projects" ref={ref} className="relative py-24">
       <motion.div style={{ y }} className="pointer-events-none absolute inset-x-0 -top-24 mx-auto h-48 w-[80%] rounded-3xl bg-gradient-to-r from-fuchsia-500/25 via-violet-500/25 to-cyan-500/25 blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-6">
-        <div className="max-w-2xl">
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            Selected work
-          </motion.h2>
-          <motion.p
-            className="mt-3 text-white/75"
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-          >
-            A mix of frontend polish and backend craftsmanship.
-          </motion.p>
+        <div className="grid items-center gap-6 md:grid-cols-2">
+          <div className="max-w-xl">
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              Selected work
+            </motion.h2>
+            <motion.p
+              className="mt-3 text-white/75"
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+            >
+              A mix of frontend polish and backend craftsmanship.
+            </motion.p>
+          </div>
+
+          <motion.div style={{ y: headerY }} className="relative h-48 w-full overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+            <Spline scene="https://prod.spline.design/N8g2VNcx8Rycz93J/scene.splinecode" style={{ width: "100%", height: "100%" }} />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          </motion.div>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

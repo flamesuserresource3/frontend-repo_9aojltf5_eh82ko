@@ -1,10 +1,15 @@
 import Spline from "@splinetool/react-spline";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { Rocket } from "lucide-react";
 
 export default function Hero() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
   return (
-    <section id="home" className="relative min-h-[92vh] w-full overflow-hidden">
+    <section id="home" ref={ref} className="relative min-h-[92vh] w-full overflow-hidden">
       {/* Colorful gradient blobs as ambient lights */}
       <div className="pointer-events-none absolute inset-0">
         <motion.div
@@ -94,15 +99,15 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <div className="relative h-[380px] w-full md:h-[520px] md:flex-1">
+        <motion.div style={{ y }} className="relative h-[380px] w-full md:h-[520px] md:flex-1">
           <div className="absolute inset-0 rounded-3xl overflow-hidden border border-white/10 bg-black/20">
             <Spline
-              scene="https://prod.spline.design/VJLoxp84lCdVfdZu/scene.splinecode"
+              scene="https://prod.spline.design/N8g2VNcx8Rycz93J/scene.splinecode"
               style={{ width: "100%", height: "100%" }}
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
